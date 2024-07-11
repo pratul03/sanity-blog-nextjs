@@ -4,7 +4,7 @@ import Image from "next/image";
 import { urlFor } from "../../lib/sanity";
 import { PortableText } from "next-sanity";
 
-async function getData(slug: string) {
+async function getData(slug: string){
   const query = `
         *[_type == "blog" && slug.current == '${slug}']{
         "currentSlug": slug.current,
@@ -24,6 +24,7 @@ export default async function BlogArticle({
   params: { slug: string };
 }) {
   const data: blogArticle = await getData(params.slug);
+  const blogData = (Object)(data.content);
   return (
     <div className="mt-8 flex flex-col justify-center items-center">
       <h1>
@@ -43,7 +44,7 @@ export default async function BlogArticle({
         className="rounded-lg mt-8 border"
       />
       <div className="mt-16 prose prose-blue prose-xl dark:prose-invert prose-headings:text-primary">
-        <PortableText value={data.content} />
+        <PortableText value={blogData} />
       </div>
     </div>
   );
